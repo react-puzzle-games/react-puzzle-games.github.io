@@ -4,20 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>React Puzzle Games</title>
-  <meta name="description" content="Classic puzzle games built with React - 15 Puzzle, Hangman, and Memory Game">
+  <meta name="description" content="Classic puzzle games built with React - 15 Puzzle, Hangman, Memory Game, and Minesweeper">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://react-puzzle-games.ovidiu.dev/">
   <meta property="og:title" content="React Puzzle Games">
-  <meta property="og:description" content="Classic puzzle games built with React - 15 Puzzle, Hangman, and Memory Game">
+  <meta property="og:description" content="Classic puzzle games built with React - 15 Puzzle, Hangman, Memory Game, and Minesweeper">
   <meta property="og:image" content="https://react-puzzle-games.ovidiu.dev/og-image.svg">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://react-puzzle-games.ovidiu.dev/">
   <meta name="twitter:title" content="React Puzzle Games">
-  <meta name="twitter:description" content="Classic puzzle games built with React - 15 Puzzle, Hangman, and Memory Game">
+  <meta name="twitter:description" content="Classic puzzle games built with React - 15 Puzzle, Hangman, Memory Game, and Minesweeper">
   <meta name="twitter:image" content="https://react-puzzle-games.ovidiu.dev/og-image.svg">
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -150,6 +150,7 @@
     .game-card.puzzle-15 { --card-color: #e94560; --card-glow: rgba(233, 69, 96, 0.3); }
     .game-card.hangman { --card-color: #f9b208; --card-glow: rgba(249, 178, 8, 0.3); }
     .game-card.memory { --card-color: #4ecca3; --card-glow: rgba(78, 204, 163, 0.3); }
+    .game-card.minesweeper { --card-color: #7b68ee; --card-glow: rgba(123, 104, 238, 0.3); }
 
     .game-icon {
       width: 80px;
@@ -257,6 +258,35 @@
 
     .icon-memory span:nth-child(even) {
       background: rgba(78, 204, 163, 0.3);
+    }
+
+    /* Minesweeper Icon */
+    .icon-minesweeper {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
+    }
+
+    .icon-minesweeper span {
+      background: rgba(123, 104, 238, 0.3);
+      border-radius: 3px;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      color: #7b68ee;
+    }
+
+    .icon-minesweeper span.revealed {
+      background: #7b68ee;
+      color: #fff;
+    }
+
+    .icon-minesweeper span.mine {
+      background: #e94560;
+      color: #fff;
     }
 
     .game-title {
@@ -391,6 +421,21 @@
         </div>
         <h2 class="game-title">Memory Puzzle</h2>
         <p class="game-description">Match pairs of cards by remembering their positions. Challenge your memory skills!</p>
+        <div class="play-btn">
+          Play Now
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+
+      <a href="https://minesweeper-game.ovidiu.dev/" class="game-card minesweeper" target="_blank" rel="noopener">
+        <div class="game-icon icon-minesweeper">
+          <span class="revealed">1</span><span class="revealed">2</span><span></span><span></span>
+          <span class="revealed">1</span><span class="mine">*</span><span></span><span></span>
+          <span class="revealed"></span><span class="revealed">1</span><span></span><span></span>
+          <span class="revealed"></span><span class="revealed"></span><span></span><span></span>
+        </div>
+        <h2 class="game-title">Minesweeper</h2>
+        <p class="game-description">Clear the minefield without detonating any mines. Use numbers as clues to find safe squares!</p>
         <div class="play-btn">
           Play Now
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
