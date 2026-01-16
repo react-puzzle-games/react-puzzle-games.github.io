@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Puzzle Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Fredoka', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .puzzle-icon {
+      width: 60px;
+      height: 60px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+      transform: rotate(-10deg);
+    }
+
+    .puzzle-piece {
+      border-radius: 6px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .puzzle-piece:nth-child(1) { background: #e94560; animation-delay: 0s; }
+    .puzzle-piece:nth-child(2) { background: #f9b208; animation-delay: 0.2s; }
+    .puzzle-piece:nth-child(3) { background: #4ecca3; animation-delay: 0.4s; }
+    .puzzle-piece:nth-child(4) { background: #7b68ee; animation-delay: 0.6s; }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(0.9); }
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #e94560, #f9b208, #4ecca3, #7b68ee);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient 5s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: #a0a0b0;
+      margin-top: 10px;
+      font-weight: 400;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .game-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 30px;
+      text-decoration: none;
+      color: #fff;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, var(--card-color) 0%, transparent 100%);
+      opacity: 0.1;
+      transition: opacity 0.3s ease;
+    }
+
+    .game-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--card-color);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px var(--card-glow);
+    }
+
+    .game-card:hover::before {
+      opacity: 0.2;
+    }
+
+    .game-card.puzzle-15 { --card-color: #e94560; --card-glow: rgba(233, 69, 96, 0.3); }
+    .game-card.hangman { --card-color: #f9b208; --card-glow: rgba(249, 178, 8, 0.3); }
+    .game-card.memory { --card-color: #4ecca3; --card-glow: rgba(78, 204, 163, 0.3); }
+
+    .game-icon {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 15 Puzzle Icon */
+    .icon-15 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
+    }
+
+    .icon-15 span {
+      background: #e94560;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      aspect-ratio: 1;
+    }
+
+    .icon-15 span:last-child {
+      background: transparent;
+    }
+
+    /* Hangman Icon */
+    .icon-hangman {
+      position: relative;
+    }
+
+    .icon-hangman .gallows {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      width: 4px;
+      height: 60px;
+      background: #f9b208;
+      border-radius: 2px;
+    }
+
+    .icon-hangman .gallows::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 40px;
+      height: 4px;
+      background: #f9b208;
+      border-radius: 2px;
+    }
+
+    .icon-hangman .gallows::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 36px;
+      width: 4px;
+      height: 15px;
+      background: #f9b208;
+      border-radius: 2px;
+    }
+
+    .icon-hangman .head {
+      position: absolute;
+      top: 25px;
+      left: 30px;
+      width: 20px;
+      height: 20px;
+      border: 4px solid #f9b208;
+      border-radius: 50%;
+    }
+
+    .icon-hangman .body {
+      position: absolute;
+      top: 45px;
+      left: 38px;
+      width: 4px;
+      height: 20px;
+      background: #f9b208;
+      border-radius: 2px;
+    }
+
+    /* Memory Icon */
+    .icon-memory {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+    }
+
+    .icon-memory span {
+      background: #4ecca3;
+      border-radius: 6px;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .icon-memory span:nth-child(even) {
+      background: rgba(78, 204, 163, 0.3);
+    }
+
+    .game-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .game-description {
+      color: #a0a0b0;
+      font-size: 1rem;
+      line-height: 1.5;
+      position: relative;
+      z-index: 1;
+    }
+
+    .play-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: var(--card-color);
+      border-radius: 25px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .game-card:hover .play-btn {
+      transform: scale(1.05);
+      box-shadow: 0 5px 20px var(--card-glow);
+    }
+
+    .play-btn svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .game-card:hover .play-btn svg {
+      transform: translateX(3px);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 80px;
+      padding: 30px;
+      color: #606080;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #7b68ee;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: #9d8fff;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .games-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 20px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <div class="puzzle-icon">
+          <div class="puzzle-piece"></div>
+          <div class="puzzle-piece"></div>
+          <div class="puzzle-piece"></div>
+          <div class="puzzle-piece"></div>
+        </div>
+        <h1>React Puzzle Games</h1>
+      </div>
+      <p class="subtitle">Classic puzzle games built with React</p>
+    </header>
+
+    <main class="games-grid">
+      <a href="https://15-puzzle.ovidiu.dev/" class="game-card puzzle-15" target="_blank" rel="noopener">
+        <div class="game-icon icon-15">
+          <span>1</span><span>2</span><span>3</span><span>4</span>
+          <span>5</span><span>6</span><span>7</span><span>8</span>
+          <span>9</span><span>10</span><span>11</span><span>12</span>
+          <span>13</span><span>14</span><span>15</span><span></span>
+        </div>
+        <h2 class="game-title">15 Puzzle</h2>
+        <p class="game-description">Slide numbered tiles to arrange them in order. A classic brain teaser built with React & Material-UI.</p>
+        <div class="play-btn">
+          Play Now
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+
+      <a href="https://hangman-game.ovidiu.dev/" class="game-card hangman" target="_blank" rel="noopener">
+        <div class="game-icon icon-hangman">
+          <div class="gallows"></div>
+          <div class="head"></div>
+          <div class="body"></div>
+        </div>
+        <h2 class="game-title">Hangman</h2>
+        <p class="game-description">Guess the hidden word letter by letter before the hangman is complete. Test your vocabulary!</p>
+        <div class="play-btn">
+          Play Now
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+
+      <a href="https://memory-puzzle.ovidiu.dev/" class="game-card memory" target="_blank" rel="noopener">
+        <div class="game-icon icon-memory">
+          <span>?</span><span>?</span><span>?</span>
+          <span>?</span><span>?</span><span>?</span>
+          <span>?</span><span>?</span><span>?</span>
+        </div>
+        <h2 class="game-title">Memory Puzzle</h2>
+        <p class="game-description">Match pairs of cards by remembering their positions. Challenge your memory skills!</p>
+        <div class="play-btn">
+          Play Now
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+    </main>
+
+    <footer>
+      <p>Built by <a href="https://ovidiu.dev" target="_blank" rel="noopener"><strong>Ovidiu</strong></a> | Open source on <a href="https://github.com/react-puzzle-games" target="_blank" rel="noopener">GitHub</a></p>
+    </footer>
+  </div>
+</body>
+</html>
