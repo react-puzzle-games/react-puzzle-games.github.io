@@ -4,20 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>React Puzzle Games</title>
-  <meta name="description" content="Classic puzzle games built with React - 15 Puzzle, Hangman, Memory Game, and Minesweeper">
+  <meta name="description" content="Classic puzzle games built with React - 15 Puzzle, Hangman, Memory Game, Minesweeper, and Tic-Tac-Toe">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://react-puzzle-games.ovidiu.dev/">
   <meta property="og:title" content="React Puzzle Games">
-  <meta property="og:description" content="Classic puzzle games built with React - 15 Puzzle, Hangman, Memory Game, and Minesweeper">
+  <meta property="og:description" content="Classic puzzle games built with React - 15 Puzzle, Hangman, Memory Game, Minesweeper, and Tic-Tac-Toe">
   <meta property="og:image" content="https://react-puzzle-games.ovidiu.dev/og-image.svg">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://react-puzzle-games.ovidiu.dev/">
   <meta name="twitter:title" content="React Puzzle Games">
-  <meta name="twitter:description" content="Classic puzzle games built with React - 15 Puzzle, Hangman, Memory Game, and Minesweeper">
+  <meta name="twitter:description" content="Classic puzzle games built with React - 15 Puzzle, Hangman, Memory Game, Minesweeper, and Tic-Tac-Toe">
   <meta name="twitter:image" content="https://react-puzzle-games.ovidiu.dev/og-image.svg">
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -151,6 +151,7 @@
     .game-card.hangman { --card-color: #f9b208; --card-glow: rgba(249, 178, 8, 0.3); }
     .game-card.memory { --card-color: #4ecca3; --card-glow: rgba(78, 204, 163, 0.3); }
     .game-card.minesweeper { --card-color: #7b68ee; --card-glow: rgba(123, 104, 238, 0.3); }
+    .game-card.tictactoe { --card-color: #f97316; --card-glow: rgba(249, 115, 22, 0.3); }
 
     .game-icon {
       width: 80px;
@@ -287,6 +288,33 @@
     .icon-minesweeper span.mine {
       background: #e94560;
       color: #fff;
+    }
+
+    /* Tic-Tac-Toe Icon */
+    .icon-tictactoe {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      padding: 4px;
+    }
+
+    .icon-tictactoe span {
+      background: rgba(249, 115, 22, 0.2);
+      border-radius: 6px;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .icon-tictactoe span.x {
+      color: #3b82f6;
+    }
+
+    .icon-tictactoe span.o {
+      color: #ef4444;
     }
 
     .game-title {
@@ -436,6 +464,20 @@
         </div>
         <h2 class="game-title">Minesweeper</h2>
         <p class="game-description">Clear the minefield without detonating any mines. Use numbers as clues to find safe squares!</p>
+        <div class="play-btn">
+          Play Now
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+
+      <a href="https://tictactoe-game.ovidiu.dev/" class="game-card tictactoe" target="_blank" rel="noopener">
+        <div class="game-icon icon-tictactoe">
+          <span class="x">X</span><span class="o">O</span><span class="x">X</span>
+          <span></span><span class="x">X</span><span></span>
+          <span class="o">O</span><span></span><span class="o">O</span>
+        </div>
+        <h2 class="game-title">Tic-Tac-Toe</h2>
+        <p class="game-description">The classic game of X's and O's. Play against a friend or challenge the computer!</p>
         <div class="play-btn">
           Play Now
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
